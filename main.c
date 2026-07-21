@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <ncurses.h>
 
 #include "file_io.h"
+#include "ui.h"
 
 uint8_t *raw_file_data; 
 
@@ -16,9 +18,13 @@ int main(int argc, char** argv)
   }
   else {printf ("Usage ./<output_filename> <file_to_read>\n"); return 1;}
 
+  init_ui();
+
   read_file (file);
-  print_hex (file);
+  display ("hex");
   
+
   fclose(file);
+  endwin();
   return 0;
 }
