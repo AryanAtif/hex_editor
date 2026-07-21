@@ -25,8 +25,10 @@ void display (char* window_name) // window_name: hex, ascii-char, etc etc
   int i = 0;
   while (i < strlen (raw_file_data))
   {
-    wprintw (window, "%02X%02X ", raw_file_data[i],  raw_file_data[i+1]);
+    if (i % 16 != 0) wprintw (window, " "); 
+    wprintw (window, "%02X%02X", raw_file_data[i],  raw_file_data[i+1]);
     i+=2;
+    
   }
   wrefresh(window);
   getch();
@@ -39,7 +41,7 @@ WINDOW* init_hex_window()
   refresh();
   
   int text_size = strlen(raw_file_data);
-  int each_row_length = 4 * 8 + 7 /*space between chars */ + 1 /* space before each row c_n */ + 2 /*chars needed to draw left-right borders*/;
+  int each_row_length = 4 * 8 + 7 /*space between chars */ + 2 /* space before each row c_n */ + 2 /*chars needed to draw left-right borders*/;
   int row_count = 2 * ceil(text_size / each_row_length + 8);
 
   WINDOW* hex_win = create_window (row_count, each_row_length, (rows-row_count)/2, (columns-each_row_length)/2);
