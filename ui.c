@@ -40,7 +40,7 @@ WINDOW* init_hex_window()
   
   int text_size = strlen(raw_file_data);
   int each_row_length = 4 * 8 + 7 /*space between chars */ + 1 /* space before each row c_n */ + 2 /*chars needed to draw left-right borders*/;
-  int row_count = 2 * ceil(text_size / each_row_length + (7 /*+ 1 + 2*/));
+  int row_count = 2 * ceil(text_size / each_row_length + 8);
 
   WINDOW* hex_win = create_window (row_count, each_row_length, (rows-row_count)/2, (columns-each_row_length)/2);
   return hex_win;
@@ -54,7 +54,6 @@ WINDOW* create_window (int height, int width, int beginy, int beginx)
   
   box (br_window, 0, 0);
   wrefresh(br_window);
-  box (content_window, 0, 0);
   wrefresh(content_window);
   return content_window;
 }
