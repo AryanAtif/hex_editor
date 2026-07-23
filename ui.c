@@ -12,7 +12,10 @@ void init_ui ()
 {
   initscr();
   raw();
-  curs_set(0); keypad (stdscr, TRUE);
+  curs_set(0);
+  keypad (stdscr, TRUE);
+  scrollok(stdscr, TRUE);
+
 }
 void display (char* window_name) // window_name: hex, ascii-char, etc etc 
 {
@@ -44,7 +47,7 @@ WINDOW* init_hex_window()
   int each_row_length = 4 * 8 + 7 /*space between chars */ + 2 /* space before each row c_n */ + 2 /*chars needed to draw left-right borders*/;
   int row_count = 2 * ceil(text_size / each_row_length + 8);
 
-  WINDOW* hex_win = create_window (row_count, each_row_length, (rows-row_count)/2, (columns-each_row_length)/2);
+  WINDOW* hex_win = create_window (row_count, each_row_length, 2, 2); // create a window at (2,2)
   return hex_win;
 
 }
@@ -52,10 +55,11 @@ WINDOW* init_hex_window()
 WINDOW* create_window (int height, int width, int beginy, int beginx)
 {
   WINDOW* br_window = newwin(height, width, beginy, beginx); // the borders for the real content window
-  WINDOW* content_window = newwin(height - 4, width - 4, beginy + 2, beginx + 2); // the actual window where we'd put our stuff in 
+  WINDOW* content_window = newwin(height - 4, width - 4, beginy + 1, beginx + 2); // the actual window where we'd put our stuff in 
   
   box (br_window, 0, 0);
   wrefresh(br_window);
   wrefresh(content_window);
   return content_window;
 }
+
