@@ -24,21 +24,15 @@ void display (int window_id) // window_id : address = 0, hex = 1, etc etc
   WINDOW* window;
   if (window_id == 0) // Window ID = 0:  address window 
   {
-  //  window = init_address_window();
+//    window = init_address_window(0); // offset from the left most column
+
   }
   else if (window_id == 1) // Window ID = 1:  hex window
   {
     window = init_hex_window();
+    print_hex (window);
   }
 
-  int i = 0;
-  while (i < strlen (raw_file_data))
-  {
-    if (i % 16 != 0) wprintw (window, " "); 
-    wprintw (window, "%02X%02X", raw_file_data[i],  raw_file_data[i+1]);
-    i+=2;
-    
-  }
   wrefresh(window);
   getch();
 }
@@ -65,3 +59,18 @@ WINDOW* create_window (int height, int width, int beginy, int beginx)
   return content_window;
 }
 
+
+/*
+ * Printing Data on Windows
+ */
+
+void print_hex (WINDOW* window)
+{
+  int i = 0;
+  while (i < strlen (raw_file_data))
+  {
+    if (i % 16 != 0) wprintw (window, " "); 
+    wprintw (window, "%02X%02X", raw_file_data[i],  raw_file_data[i+1]);
+    i+=2;
+  }
+}

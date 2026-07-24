@@ -20,15 +20,3 @@ void read_file (FILE *file)
   raw_file_data = (uint8_t *) malloc (file_size * sizeof (uint8_t));
   fread (raw_file_data, sizeof (uint8_t), file_size, file);
 }
-
-void print_hex (FILE *file)
-{
-  int i = 0;
-  while (i < get_file_size(file))
-  {
-    printf ("%02X%02X ", raw_file_data[i],  raw_file_data[i+1]);
-    i += 2;
-  }
-}
-
-
