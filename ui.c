@@ -16,11 +16,17 @@ void init_ui ()
   keypad (stdscr, TRUE);
   scrollok(stdscr, TRUE);
 
+  refresh();
+
 }
-void display (char* window_name) // window_name: hex, ascii-char, etc etc 
+void display (int window_id) // window_id : address = 0, hex = 1, etc etc 
 {
   WINDOW* window;
-  if (window_name = "hex") // if we're supposed to display the data from the hex window
+  if (window_id == 0) // Window ID = 0:  address window 
+  {
+  //  window = init_address_window();
+  }
+  else if (window_id == 1) // Window ID = 1:  hex window
   {
     window = init_hex_window();
   }
@@ -39,10 +45,6 @@ void display (char* window_name) // window_name: hex, ascii-char, etc etc
 
 WINDOW* init_hex_window()
 {
-  int rows, columns;
-  getmaxyx (stdscr, rows, columns);
-  refresh();
-  
   int text_size = strlen(raw_file_data);
   int each_row_length = 4 * 8 + 7 /*space between chars */ + 2 /* space before each row c_n */ + 2 /*chars needed to draw left-right borders*/;
   int row_count = 2 * ceil(text_size / each_row_length + 8);
